@@ -21,19 +21,26 @@
 #goatFour{
 	background-color: yellow;
 }
-.activateGoatOne{
-	background-image: url("goatOne.png");
+.activateGoatOne,
+.activateGoatTwo,
+.activateGoatThree,
+.activateGoatFour{
 	background-position: center;
 	background-repeat: none;
 }
+
+
+.activateGoatOne{
+	background-image: url("goatOne.jpg");
+}
 .activateGoatTwo{
-	background-image: 	
+	background-image: url("goatTwo.png") 	
 }
 .activateGoatThree{
-	background-image: 	
+	background-image: url("goatThree.jpg");
 }
 .activateGoatFour{
-	background-image: 	
+	background-image: url("goatFour.jpg");
 }
 .scoreCounter{
 	clear: left;
