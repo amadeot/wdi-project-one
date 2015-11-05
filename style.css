@@ -1,0 +1,41 @@
+.goatContainer{
+	width: 90%;
+	margin: 0 auto;
+}
+.button{
+	width: 23%;
+	height: 260px;
+	border-radius: 250px;
+	float: left;
+	margin: 10px;
+}
+#goatOne{
+	background-color: red;
+}
+#goatTwo{
+	background-color: blue;
+}
+#goatThree{
+	background-color: green;
+}
+#goatFour{
+	background-color: yellow;
+}
+.activateGoatOne{
+	background-image: url("goatOne.png");
+	background-position: center;
+	background-repeat: none;
+}
+.activateGoatTwo{
+	background-image: 	
+}
+.activateGoatThree{
+	background-image: 	
+}
+.activateGoatFour{
+	background-image: 	
+}
+.scoreCounter{
+	clear: left;
+
+}
