@@ -4,7 +4,9 @@
 Making Goat Screams
 
 user stories
+
   a user should see 4 buttons on screen, a high score with my name and a score, a score counter and one start button
+  
   the user can press the start button, which after a slight delay, one of the buttons background image will turn into a goat and scream randomly
   the user then will be able to click all four buttons.
   if they click the correct button it will turn into a goat and scream again randomly, score 1 point
