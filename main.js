@@ -48,6 +48,7 @@ $(document).ready(function() {
 					addRemoveGoat($goatFour,'activateGoatFour');
 				}
 			}
+			computerClick=0
 		};
 		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[500]);
 		var goatSelector = function(event){
@@ -71,6 +72,8 @@ $(document).ready(function() {
 			console.log($goatPen[counter].selector);
 			console.log($humanPen[counter].selector);
 			for(counter;counter<$goatPen.length;counter++){
+				console.log($goatPen.length)
+				console.log($humanPen.length)
 				if ($goatPen[counter].selector===$humanPen[counter].selector){
 					console.log('great job');
 					counter++
@@ -78,6 +81,7 @@ $(document).ready(function() {
 					console.log('failure');
 				}
 			}
+		counter=0
 		goatNumber++;
 		addGoatToPen()
 		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[500]);
