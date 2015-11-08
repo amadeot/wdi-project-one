@@ -22,7 +22,7 @@ $(document).ready(function() {
 		};
 			var removeGoat = function(select,place){
 				setTimeout(function(){
-					select.removeClass(place);},[500]
+					select.removeClass(place);},[250]
 				);
 			};
 			addGoat(select,place);
@@ -37,7 +37,7 @@ $(document).ready(function() {
 		}
 		addGoatToPen();
 		var compGoatSelector = function(){  
-			for(computerClick;computerClick<$goatPen.length;computerClick++){
+			while(computerClick<$goatPen.length){
 				if ($goatPen[computerClick].selector==="#goatOne"){
 					addRemoveGoat($goatOne,'activateGoatOne');
 				} else if ($goatPen[computerClick].selector==="#goatTwo"){
@@ -47,10 +47,10 @@ $(document).ready(function() {
 				} else if ($goatPen[computerClick].selector==="#goatFour"){
 					addRemoveGoat($goatFour,'activateGoatFour');
 				}
-			}
+			computerClick++}
 			computerClick=0
 		};
-		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[1000]);
+		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[500]);
 
 		var goatSelector = function(event){
 			if (event.target.id==='goatOne'){
