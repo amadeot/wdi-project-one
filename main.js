@@ -12,7 +12,6 @@ $(document).ready(function() {
 	$humanPen = []; 
 	counter=0;
 	computerClick=0;
-	humanClick=0;
 	goatNumber=0;
 
 	var startGame = function(event){	
@@ -28,11 +27,8 @@ $(document).ready(function() {
 			addGoat(select,place);
 			removeGoat(select,place);
 		};
-		// var addRandomGoatToPen = function(){
-		// 	var i=Math.floor(Math.random()*4);
-		// 	$goatPen.push($goatList[i]);
-		// };
 		var addGoatToPen = function(){
+			var goatNumber = Math.floor(Math.random()*4);
 			$goatPen.push($goatList[goatNumber])
 		}
 		addGoatToPen();
@@ -66,7 +62,6 @@ $(document).ready(function() {
 				addRemoveGoat($goatFour,'activateGoatFour');
 				$humanPen.push($goatFour);
 			}
-		humanClick++
 		};
 
 		$allGoats.on('click',goatSelector);
@@ -76,8 +71,7 @@ $(document).ready(function() {
 					if ($goatPen[counter].selector===$humanPen[counter].selector){
 						console.log('great job');
 						counter=0
-						goatNumber++;
-						setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[1500]);
+						setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[750]);
 						$humanPen=[]
 						addGoatToPen()
 					} else {
