@@ -50,7 +50,8 @@ $(document).ready(function() {
 			}
 			computerClick=0
 		};
-		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[500]);
+		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[1000]);
+
 		var goatSelector = function(event){
 			if (event.target.id==='goatOne'){
 				addRemoveGoat($goatOne,'activateGoatOne');
@@ -65,26 +66,27 @@ $(document).ready(function() {
 				addRemoveGoat($goatFour,'activateGoatFour');
 				$humanPen.push($goatFour);
 			}
-		humanClick++};
+		humanClick++
+		};
 
 		$allGoats.on('click',goatSelector);
 		var clickChecker = function(){
-			console.log($goatPen[counter].selector);
-			console.log($humanPen[counter].selector);
-			for(counter;counter<$goatPen.length;counter++){
-				console.log($goatPen.length)
-				console.log($humanPen.length)
-				if ($goatPen[counter].selector===$humanPen[counter].selector){
-					console.log('great job');
-					counter++
-				} else {
-					console.log('failure');
+			if($goatPen.length === $humanPen.length){
+				for(counter;counter<$humanPen.length;counter++){
+					if ($goatPen[counter].selector===$humanPen[counter].selector){
+						console.log('great job');
+						counter=0
+						goatNumber++;
+						setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[1500]);
+						$humanPen=[]
+						addGoatToPen()
+					} else {
+						console.log('failure');
+					}
 				}
+			} else {
+				console.log('keep going');
 			}
-		counter=0
-		goatNumber++;
-		addGoatToPen()
-		setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[500]);
 		};
 		$allGoats.on('click',clickChecker);
 	};
