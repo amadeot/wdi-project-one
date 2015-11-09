@@ -11,8 +11,14 @@ var $goatPen;
 var $humanPen;
 var counter = 0;
 
+//defining a few variables globally
+
 $(document).ready(function() {
-	var audio = new Audio('TheScreamingSheep.mp3');
+	var clip1 = new Audio('GoatScream01.mp3');
+	var clip2 = new Audio('GoatScream02.mp3');
+	var clip3 = new Audio('GoatScream03.mp3');
+	var clip4 = new Audio('GoatScream04.mp3');
+				
 	$allGoats = $('.goatButton');
 	$goatOne = $('#goatOne');
 	$goatTwo = $('#goatTwo');
@@ -28,10 +34,11 @@ $(document).ready(function() {
 	$currScore = $('#counter');
 	score = 0;
 	$playerName = $('#playerName');
+
 //all variables used above
 	var startGame = function(event){	//nothing starts until the startgame function runs
 		
-		var addRemoveGoat=function(select,place){//this is the process to make a goat flash
+		var addRemoveGoat=function(select,place){//this is the process to make a goat flash for a human
 			var addGoat = function(select,place){//this is the part where it flashes on
 				select.addClass(place);
 			};
@@ -45,20 +52,20 @@ $(document).ready(function() {
 			removeGoat(select,place);
 		};
 
-		var removeComputerGoat = function(goat, i) {
+		var removeComputerGoat = function(goat, i) {//this removes the computer goat flash for computer
 			window.setTimeout(function(){
 				goat.removeClass('activate');
 			}, (i+1)*500);
 		};
 
-		var addComputerGoat= function(goat, i) {
+		var addComputerGoat= function(goat, i) {//this adds computer goat flash for computer
 			window.setTimeout(function(){
 				goat.addClass('activate');
 				removeComputerGoat(goat,i);
 			}, (i+1)*500);
 		};
 
-		var compGoatSelector = function(){
+		var compGoatSelector = function(){//this function adds and removes goat flash for computer
 			for (var i = 0; i < $goatPen.length; i++){
 				var goat = $goatPen[i];
 				addComputerGoat(goat,i);
@@ -77,23 +84,23 @@ $(document).ready(function() {
 		}, 500);//callin it with a slight delay
 
 		var goatSelector = function(event){//this is how the human clicks work
-			// TODO research swtich statements
+			// TODO research switch statements
 			if (event.target.id === 'goatOne'){
 				addRemoveGoat($goatOne,'activate');
 				$humanPen.push($goatOne);
-				audio.play();
+				clip1.play();
 			} else if (event.target.id === 'goatTwo'){
 				addRemoveGoat($goatTwo,'activate');
 				$humanPen.push($goatTwo);
-				audio.play();				
+				clip2.play();				
 			} else if (event.target.id === 'goatThree'){
 				addRemoveGoat($goatThree,'activate');
 				$humanPen.push($goatThree);
-				audio.play();
+				clip3.play();
 			} else if (event.target.id === 'goatFour'){
 				addRemoveGoat($goatFour,'activate');
 				$humanPen.push($goatFour);
-				audio.play();
+				clip4.play();
 			}
 		};
 

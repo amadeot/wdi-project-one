@@ -7,6 +7,7 @@ h2{
 }
 body{
 	background-image: url(pen.jpg);
+	background-repeat: no-repeat;
 }
 .scoreContainer,
 .scoreCounter,
@@ -23,6 +24,7 @@ body{
 	float: left;
 	margin: 10px;
 	cursor: pointer;
+	opacity: 50%
 }
 #goatOne{
 	background-color: red;
