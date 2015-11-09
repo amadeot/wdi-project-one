@@ -83,9 +83,9 @@ $(document).ready(function() {
 				for(counter;counter<$humanPen.length;counter++){
 					if ($goatPen[counter].selector===$humanPen[counter].selector){
 						console.log('great job');
-						counter=0
 						addGoatToPen()
-						setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[750]);
+						setTimeout(compGoatSelector($goatPen),500);
+						counter=0
 						$humanPen=[]
 						score++
 						$currScore.text(score)
@@ -94,7 +94,7 @@ $(document).ready(function() {
 							if(score>highScoreInt){
 							$highScore.text(score)
 							highScoreInt=score
-							$highScoreName.text($playerName.val())
+							return $highScoreName.text($playerName.val())
 						}
 					}
 				}
