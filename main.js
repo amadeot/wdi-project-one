@@ -12,6 +12,12 @@ $(document).ready(function() {
 	$humanPen = []; 
 	counter=0;
 	computerClick=0;
+	$highScore=$('h2#highScore')
+	highScoreInt=3
+	$highScoreName=$('h2#highScoreName')
+	$currScore=$('h2#counter')
+	score=0
+	$playerName=$('input#playerName')
 //all variables used above
 	var startGame = function(event){	//nothing starts until the startgame function runs
 		var addRemoveGoat=function(select,place){//this is the process to make a goat flash
@@ -81,8 +87,15 @@ $(document).ready(function() {
 						addGoatToPen()
 						setTimeout(function(){compGoatSelector($goatPen[computerClick]);},[750]);
 						$humanPen=[]
+						score++
+						$currScore.text(score)
 					} else {
 						console.log('failure');
+							if(score>highScoreInt){
+							$highScore.text(score)
+							highScoreInt=score
+							$highScoreName.text($playerName.val())
+						}
 					}
 				}
 			} else {
