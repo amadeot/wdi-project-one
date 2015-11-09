@@ -9,7 +9,6 @@ var $start;
 var $goatList;
 var $goatPen;
 var $humanPen;
-var computerClick;
 
 $(document).ready(function() {
 	var audio = new Audio('TheScreamingSheep.mp3');
@@ -25,7 +24,6 @@ $(document).ready(function() {
 	$highScore = $('#highScore')
 	highScoreInt = 3
 	$highScoreName = $('#highScoreName');
-	computerClick = 0;
 	$currScore = $('#counter')
 	score = 0
 	$playerName = $('#playerName')
@@ -45,37 +43,40 @@ $(document).ready(function() {
 			addGoat(select,place);//calling functions in functions for this
 			removeGoat(select,place);
 		};
+		var timer = function(){
+			console.log('time')
+		}
+
+		var removeComputerGoat = function(goat, i) {
+			window.setTimeout(function(){
+				goat.removeClass('activate')
+			}, (i+1)*500)
+		};
+
+		var addComputerGoat= function(goat, i) {
+			window.setTimeout(function(){
+				goat.addClass('activate')
+				removeComputerGoat(goat,i)
+			}, (i+1)*500)
+		}
+
+		var compGoatSelector = function(){
+			for (var i = 0; i < $goatPen.length; i++){
+				var goat = $goatPen[i];
+				addComputerGoat(goat,i)
+			}
+		}
 
 		var addGoatToPen = function(){//this is how to add a random goat to the list of goats to click
 			var goatNumber = Math.floor(Math.random()*4);
 			$goatPen.push($goatList[goatNumber])
 		}
-		
+	
 		addGoatToPen();//callin it to start off the game
 		
-		var compGoatSelector = function(){  //computer goes first, runs through list of goats in the pen
-			while(computerClick < $goatPen.length){
-				if ($goatPen[computerClick].selector === "#goatOne"){
-					addRemoveGoat($goatOne,'activate');
-					audio.play();
-				} else if ($goatPen[computerClick].selector === "#goatTwo"){
-					addRemoveGoat($goatTwo,'activate');
-					audio.play();
-				} else if ($goatPen[computerClick].selector === "#goatThree"){
-					addRemoveGoat($goatThree,'activate');
-					audio.play();
-				} else if ($goatPen[computerClick].selector === "#goatFour"){
-					addRemoveGoat($goatFour,'activate');
-					audio.play();
-				}
-				computerClick++;
-			}
-			computerClick = 0;
-		};
-		
 		setTimeout(function(){
-			compGoatSelector($goatPen[computerClick]);
-		}, [500]);//callin it with a slight delay
+			compGoatSelector();
+		}, 500);//callin it with a slight delay
 
 		var goatSelector = function(event){//this is how the human clicks work
 			// TODO research swtich statements
@@ -109,7 +110,7 @@ $(document).ready(function() {
 						
 						setTimeout(function(){
 							compGoatSelector()
-						}, counter+1 * 500);
+						}, 500);
 
 						$humanPen = [];
 						score++;
@@ -121,12 +122,14 @@ $(document).ready(function() {
 							highScoreInt = score;
 							return $highScoreName.text($playerName.val())
 						}
+						break;
 					}
 				}
 			} else {
 				console.log('keep going');
 			}
 		};
+		
 
 		$allGoats.on('click',clickChecker);
 	};
