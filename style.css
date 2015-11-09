@@ -36,25 +36,22 @@ body{
 #goatFour{
 	background-color: yellow;
 }
-.activateGoatOne,
-.activateGoatTwo,
-.activateGoatThree,
-.activateGoatFour{
+.activate{
 	background-position: center;
 	background-repeat: none;
 }
 
 
-.activateGoatOne{
+.activate#goatOne{
 	background-image: url("goatOne.jpg");
 }
-.activateGoatTwo{
+.activate#goatTwo{
 	background-image: url("goatTwo.png") 	
 }
-.activateGoatThree{
+.activate#goatThree{
 	background-image: url("goatThree.jpg");
 }
-.activateGoatFour{
+.activate#goatFour{
 	background-image: url("goatFour.jpg");
 }
 .scoreCounter{
