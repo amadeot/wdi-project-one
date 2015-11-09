@@ -9,6 +9,7 @@ var $start;
 var $goatList;
 var $goatPen;
 var $humanPen;
+var counter = 0;
 
 $(document).ready(function() {
 	var audio = new Audio('TheScreamingSheep.mp3');
@@ -21,12 +22,12 @@ $(document).ready(function() {
 	$goatList = [$goatOne, $goatTwo, $goatThree, $goatFour];
 	$goatPen = [];
 	$humanPen = [];
-	$highScore = $('#highScore')
-	highScoreInt = 3
+	$highScore = $('#highScore');
+	highScoreInt = 3;
 	$highScoreName = $('#highScoreName');
-	$currScore = $('#counter')
-	score = 0
-	$playerName = $('#playerName')
+	$currScore = $('#counter');
+	score = 0;
+	$playerName = $('#playerName');
 //all variables used above
 	var startGame = function(event){	//nothing starts until the startgame function runs
 		
@@ -38,39 +39,36 @@ $(document).ready(function() {
 			var removeGoat = function(select,place){//this is the part where it flashes off
 				setTimeout(function(){
 					select.removeClass(place);
-				}, 250);
+				}, 500);
 			};
 			addGoat(select,place);//calling functions in functions for this
 			removeGoat(select,place);
 		};
-		var timer = function(){
-			console.log('time')
-		}
 
 		var removeComputerGoat = function(goat, i) {
 			window.setTimeout(function(){
-				goat.removeClass('activate')
-			}, (i+1)*500)
+				goat.removeClass('activate');
+			}, (i+1)*500);
 		};
 
 		var addComputerGoat= function(goat, i) {
 			window.setTimeout(function(){
-				goat.addClass('activate')
-				removeComputerGoat(goat,i)
-			}, (i+1)*500)
-		}
+				goat.addClass('activate');
+				removeComputerGoat(goat,i);
+			}, (i+1)*500);
+		};
 
 		var compGoatSelector = function(){
 			for (var i = 0; i < $goatPen.length; i++){
 				var goat = $goatPen[i];
-				addComputerGoat(goat,i)
+				addComputerGoat(goat,i);
 			}
-		}
+		};
 
 		var addGoatToPen = function(){//this is how to add a random goat to the list of goats to click
 			var goatNumber = Math.floor(Math.random()*4);
-			$goatPen.push($goatList[goatNumber])
-		}
+			$goatPen.push($goatList[goatNumber]);
+		};
 	
 		addGoatToPen();//callin it to start off the game
 		
@@ -101,35 +99,64 @@ $(document).ready(function() {
 
 		$allGoats.on('click', goatSelector);//callin it
 
-		var clickChecker = function(){//this checks the human clicks against the computer clicks
-			if($goatPen.length === $humanPen.length){
-				for(var counter = 0; counter < $humanPen.length; counter++){
-					if ($goatPen[counter].selector === $humanPen[counter].selector){
-						console.log('great job');
-						addGoatToPen();
-						
-						setTimeout(function(){
-							compGoatSelector()
-						}, 500);
-
+		var clickChecker = function(){
+			if($humanPen.length < $goatPen.length){
+				console.log('human is less than goat');
+				if($goatPen[counter].selector !== $humanPen[counter].selector){
+					console.log('fail');
+					if (score > highScoreInt){
+						$highScore.text(score);
+						highScoreInt=score;
+						$highScoreName.text($playerName.val());
+						alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
+						$playerName.val('');
+						$goatPen = [];
 						$humanPen = [];
-						score++;
-						$currScore.text(score);
-					} else {
-						console.log('failure');
-						if( score > highScoreInt) {
-							$highScore.text(score)
-							highScoreInt = score;
-							return $highScoreName.text($playerName.val())
-						}
-						break;
+						score = 0;
+						counter = 0;
+					} else if (highScoreInt >= score) {						
+						alert('Hit start to try again!');
+						$goatPen = [];
+						$humanPen = [];
+						score = 0;
+						counter = 0;		
 					}
+				} else if ($goatPen[counter].selector === $humanPen[counter].selector){
+					console.log('keep going');
+					counter++;
 				}
-			} else {
-				console.log('keep going');
+			}else if ($humanPen.length === $goatPen.length){
+				console.log('hit the right length');
+				if ($goatPen[counter].selector !== $humanPen[counter].selector){
+					console.log('fail');
+					if (score > highScoreInt){
+						$highScore.text(score);
+						highScoreInt=score;
+						$highScoreName.text($playerName.val());
+						alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
+						$playerName.val('');
+						$goatPen = [];
+						$humanPen = [];
+						score = 0;
+						counter = 0;
+					} else if (highScoreInt >= score) {
+						alert('Hit start to try again!');
+						$goatPen = [];
+						$humanPen = [];
+						score = 0;
+						counter = 0;					
+					}
+				} else if ($goatPen[counter].selector === $humanPen[counter].selector){
+					console.log('great job');
+					addGoatToPen();
+					setTimeout(function(){compGoatSelector();},500);
+					$humanPen= [];
+					score++;
+					$currScore.text(score);
+				}
+			counter=0;
 			}
 		};
-		
 
 		$allGoats.on('click',clickChecker);
 	};
