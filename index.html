@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>GoatClicker</title>
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<script src="jQuery.js"></script>
 	<script type="text/javascript" src="main.js"></script>
 </head>
 <body>
 	<header>
-		<h1>High Score</h1>
-		<h2 id="highScoreName">Amadeo</h2><h2 id="highScore">1</h2>
+		<h1 class="title">Goat Clicker</h1>
+		<h1 class="highScoreTitle">High Score</h1>
+		<div class="scoreContainer">
+			<h2 id="highScoreName">Amadeo</h2>
+			<h2 id="highScore">1</h2>
+		</div>
 	</header>
 	<div class="goatContainer">
-	<div id="goatOne" class="goatButton"></div>
-	<div id="goatTwo" class="goatButton"></div>
-	<div id="goatThree" class="goatButton"></div>
-	<div id="goatFour" class="goatButton"></div>
+		<div id="goatOne" class="goatButton"></div>
+		<div id="goatTwo" class="goatButton"></div>
+		<div id="goatThree" class="goatButton"></div>
+		<div id="goatFour" class="goatButton"></div>
 	</div>
 	<div class="scoreCounter">
-	<button id="start">Start</button>
-	<h2>Score </h2> <h2 id="counter">0</h2>
+		<button id="start">Start</button>
+		<h2>Score </h2>
+		<h2 id="counter">0</h2>
 	</div>
 </body>
 </html>

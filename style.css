@@ -1,6 +1,16 @@
+header,
+h2{
+	text-align: center;
+}
+.scoreContainer,
+.scoreCounter,
 .goatContainer{
 	width: 90%;
 	margin: 0 auto;
+	text-align: center;
+}
+.goatContainer{
+	clear: left;
 }
 .goatButton{
 	width: 23%;
