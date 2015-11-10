@@ -14,7 +14,7 @@ var counter = 0;
 //defining a few variables globally
 
 $(document).ready(function() {
-	alert('The goats keep escaping the pen! Remember the order they escape and click them to bring them back!')
+	alert('The goats keep escaping the pen! Remember the order they escape and click them to bring them back!');
 	var clip1 = new Audio('GoatScream01.mp3');//these are the audio files used later on
 	var clip2 = new Audio('GoatScream02.mp3');
 	var clip3 = new Audio('GoatScream03.mp3');
@@ -101,34 +101,38 @@ $(document).ready(function() {
 				clip1.play();
 				break;					
 		}
-	}
+	};
 	var adjustHighScore = function(){//used to adjust high score
 		$highScore.text(score);
 		highScoreInt=score;
 		$highScoreName.text($playerName.val());
 		alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
 		$playerName.val('');
-	}
+	};
 
 	var clearBoard = function(){//used to reset the game
 		$goatPen = [];
 		$humanPen = [];
 		score = 0;
 		counter = 0;		
-	}
+	};
+
+	var losingResponse = function(){//used to determine what to do if there is a losing response
+		console.log('fail');
+		if (score > highScoreInt){//if score is higher than the current high score
+			adjustHighScore();
+			clearBoard();
+		} else if (highScoreInt >= score) {	//if it is less than or equal to high score					
+			alert('Hit start to try again!');
+			clearBoard();	
+		}
+	};
 
 	var clickChecker = function(){//function for checking against computer clicks
 		if($humanPen.length < $goatPen.length){//first sees if human input is as long as computer input
 			console.log('human is less than goat');
 			if($goatPen[counter].selector !== $humanPen[counter].selector){//if input does not match
-				console.log('fail');
-				if (score > highScoreInt){//if score is higher than the current high score
-					adjustHighScore()
-					clearBoard()
-				} else if (highScoreInt >= score) {	//if it is less than or equal to high score					
-					alert('Hit start to try again!');
-					clearBoard()		
-				}
+				losingResponse();
 			} else if ($goatPen[counter].selector === $humanPen[counter].selector){//if the input does match
 				console.log('keep going');
 				counter++;
@@ -136,14 +140,7 @@ $(document).ready(function() {
 		}else if ($humanPen.length === $goatPen.length){//if the input is as long as computer input
 			console.log('hit the right length');
 			if ($goatPen[counter].selector !== $humanPen[counter].selector){//if input doesn't match
-				console.log('fail');
-				if (score > highScoreInt){//if score is higher than current high score
-					adjustHighScore()
-					clearBoard()
-				} else if (highScoreInt >= score) {//if score is less than or equal to high score
-					alert('Hit start to try again!');
-					clearBoard()				
-				}
+				losingResponse();
 			} else if ($goatPen[counter].selector === $humanPen[counter].selector){//if input is correct, partial reset for next round, score goes up
 				console.log('great job');
 				addGoatToPen();

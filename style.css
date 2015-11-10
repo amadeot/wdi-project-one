@@ -43,7 +43,6 @@ body{
 	background-repeat: none;
 }
 
-
 .activate#goatOne{
 	background-image: url("goatOne.jpg");
 }
@@ -58,5 +57,4 @@ body{
 }
 .scoreCounter{
 	clear: left;
-
 }
