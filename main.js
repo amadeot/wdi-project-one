@@ -14,7 +14,8 @@ var counter = 0;
 //defining a few variables globally
 
 $(document).ready(function() {
-	var clip1 = new Audio('GoatScream01.mp3');
+	alert('The goats keep escaping the pen! Remember the order they escape and click them to bring them back!')
+	var clip1 = new Audio('GoatScream01.mp3');//these are the audio files used later on
 	var clip2 = new Audio('GoatScream02.mp3');
 	var clip3 = new Audio('GoatScream03.mp3');
 	var clip4 = new Audio('GoatScream04.mp3');
@@ -36,137 +37,136 @@ $(document).ready(function() {
 	$playerName = $('#playerName');
 
 //all variables used above
-	var startGame = function(event){	//nothing starts until the startgame function runs
-		
-		var addRemoveGoat=function(select,place){//this is the process to make a goat flash for a human
-			var addGoat = function(select,place){//this is the part where it flashes on
-				select.addClass(place);
-			};
 
-			var removeGoat = function(select,place){//this is the part where it flashes off
-				setTimeout(function(){
-					select.removeClass(place);
-				}, 500);
-			};
-			addGoat(select,place);//calling functions in functions for this
-			removeGoat(select,place);
+	var addRemoveGoat=function(select,place){//this is the process to make a goat flash for a human
+		var addGoat = function(select,place){//this is the part where it flashes on
+			select.addClass(place);
 		};
 
-		var removeComputerGoat = function(goat, i) {//this removes the computer goat flash for computer
-			window.setTimeout(function(){
-				goat.removeClass('activate');
-			}, (i+1)*500);
+		var removeGoat = function(select,place){//this is the part where it flashes off
+			setTimeout(function(){
+				select.removeClass(place);
+			}, 500);
 		};
+		addGoat(select,place);//calling functions in functions for this
+		removeGoat(select,place);
+	};
 
-		var addComputerGoat= function(goat, i) {//this adds computer goat flash for computer
-			window.setTimeout(function(){
-				goat.addClass('activate');
-				removeComputerGoat(goat,i);
-			}, (i+1)*500);
-		};
+	var removeComputerGoat = function(goat, i) {//this removes the computer goat flash for computer
+		window.setTimeout(function(){
+			goat.removeClass('activate');
+		}, (i+1)*500);
+	};
 
-		var compGoatSelector = function(){//this function adds and removes goat flash for computer
-			for (var i = 0; i < $goatPen.length; i++){
-				var goat = $goatPen[i];
-				addComputerGoat(goat,i);
-			}
-		};
+	var addComputerGoat= function(goat, i) {//this adds computer goat flash for computer
+		window.setTimeout(function(){
+			goat.addClass('activate');
+			removeComputerGoat(goat,i);
+		}, (i+1)*500);
+	};
 
-		var addGoatToPen = function(){//this is how to add a random goat to the list of goats to click
-			var goatNumber = Math.floor(Math.random()*4);
-			$goatPen.push($goatList[goatNumber]);
-		};
+	var compGoatSelector = function(){//this function adds and removes goat flash for computer
+		for (var i = 0; i < $goatPen.length; i++){
+			var goat = $goatPen[i];
+			addComputerGoat(goat,i);
+		}
+	};
+
+
+	var addGoatToPen = function(){//this is how to add a random goat to the list of goats to click
+		var goatNumber = Math.floor(Math.random()*4);
+		$goatPen.push($goatList[goatNumber]);
+	};
 	
-		addGoatToPen();//callin it to start off the game
+	var goatSelector = function(event){//a switch for the human input
+		switch(event.target.id){
+			case "goatOne":
+				addRemoveGoat($goatOne,'activate');
+				$humanPen.push($goatOne);
+				clip4.play();
+				break;
+			case "goatTwo":
+				addRemoveGoat($goatTwo,'activate');
+				$humanPen.push($goatTwo);
+				clip3.play();
+				break;
+			case "goatThree":
+				addRemoveGoat($goatThree,'activate');
+				$humanPen.push($goatThree);
+				clip2.play();
+				break;
+			case "goatFour":
+				addRemoveGoat($goatFour,'activate');
+				$humanPen.push($goatFour);
+				clip1.play();
+				break;					
+		}
+	}
+	var adjustHighScore = function(){//used to adjust high score
+		$highScore.text(score);
+		highScoreInt=score;
+		$highScoreName.text($playerName.val());
+		alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
+		$playerName.val('');
+	}
+
+	var clearBoard = function(){//used to reset the game
+		$goatPen = [];
+		$humanPen = [];
+		score = 0;
+		counter = 0;		
+	}
+
+	var clickChecker = function(){//function for checking against computer clicks
+		if($humanPen.length < $goatPen.length){//first sees if human input is as long as computer input
+			console.log('human is less than goat');
+			if($goatPen[counter].selector !== $humanPen[counter].selector){//if input does not match
+				console.log('fail');
+				if (score > highScoreInt){//if score is higher than the current high score
+					adjustHighScore()
+					clearBoard()
+				} else if (highScoreInt >= score) {	//if it is less than or equal to high score					
+					alert('Hit start to try again!');
+					clearBoard()		
+				}
+			} else if ($goatPen[counter].selector === $humanPen[counter].selector){//if the input does match
+				console.log('keep going');
+				counter++;
+			}
+		}else if ($humanPen.length === $goatPen.length){//if the input is as long as computer input
+			console.log('hit the right length');
+			if ($goatPen[counter].selector !== $humanPen[counter].selector){//if input doesn't match
+				console.log('fail');
+				if (score > highScoreInt){//if score is higher than current high score
+					adjustHighScore()
+					clearBoard()
+				} else if (highScoreInt >= score) {//if score is less than or equal to high score
+					alert('Hit start to try again!');
+					clearBoard()				
+				}
+			} else if ($goatPen[counter].selector === $humanPen[counter].selector){//if input is correct, partial reset for next round, score goes up
+				console.log('great job');
+				addGoatToPen();
+				setTimeout(function(){compGoatSelector();},500);
+				$humanPen= [];
+				score++;
+				$currScore.text(score);
+			}
+		counter=0;
+		}
+	};
+
+	var startGame = function(event){	//nothing starts until the startgame function runs
+		addGoatToPen();//starts by adding a goat to the pen
 		
 		setTimeout(function(){
 			compGoatSelector();
-		}, 500);//callin it with a slight delay
+		}, 500);//callin the computer to start with a slight delay
 
-		var goatSelector = function(event){//this is how the human clicks work
-			// TODO research switch statements
-			if (event.target.id === 'goatOne'){
-				addRemoveGoat($goatOne,'activate');
-				$humanPen.push($goatOne);
-				clip1.play();
-			} else if (event.target.id === 'goatTwo'){
-				addRemoveGoat($goatTwo,'activate');
-				$humanPen.push($goatTwo);
-				clip2.play();				
-			} else if (event.target.id === 'goatThree'){
-				addRemoveGoat($goatThree,'activate');
-				$humanPen.push($goatThree);
-				clip3.play();
-			} else if (event.target.id === 'goatFour'){
-				addRemoveGoat($goatFour,'activate');
-				$humanPen.push($goatFour);
-				clip4.play();
-			}
-		};
+		$allGoats.on('click', goatSelector);//allows goats to be clicked
 
-		$allGoats.on('click', goatSelector);//callin it
-
-		var clickChecker = function(){
-			if($humanPen.length < $goatPen.length){
-				console.log('human is less than goat');
-				if($goatPen[counter].selector !== $humanPen[counter].selector){
-					console.log('fail');
-					if (score > highScoreInt){
-						$highScore.text(score);
-						highScoreInt=score;
-						$highScoreName.text($playerName.val());
-						alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
-						$playerName.val('');
-						$goatPen = [];
-						$humanPen = [];
-						score = 0;
-						counter = 0;
-					} else if (highScoreInt >= score) {						
-						alert('Hit start to try again!');
-						$goatPen = [];
-						$humanPen = [];
-						score = 0;
-						counter = 0;		
-					}
-				} else if ($goatPen[counter].selector === $humanPen[counter].selector){
-					console.log('keep going');
-					counter++;
-				}
-			}else if ($humanPen.length === $goatPen.length){
-				console.log('hit the right length');
-				if ($goatPen[counter].selector !== $humanPen[counter].selector){
-					console.log('fail');
-					if (score > highScoreInt){
-						$highScore.text(score);
-						highScoreInt=score;
-						$highScoreName.text($playerName.val());
-						alert('Congrats '+$playerName.val()+'! You have beaten the high score. Hit start to try again!');
-						$playerName.val('');
-						$goatPen = [];
-						$humanPen = [];
-						score = 0;
-						counter = 0;
-					} else if (highScoreInt >= score) {
-						alert('Hit start to try again!');
-						$goatPen = [];
-						$humanPen = [];
-						score = 0;
-						counter = 0;					
-					}
-				} else if ($goatPen[counter].selector === $humanPen[counter].selector){
-					console.log('great job');
-					addGoatToPen();
-					setTimeout(function(){compGoatSelector();},500);
-					$humanPen= [];
-					score++;
-					$currScore.text(score);
-				}
-			counter=0;
-			}
-		};
-
-		$allGoats.on('click',clickChecker);
+		$allGoats.on('click',clickChecker);//checks human input against computer
 	};
 
-	$start.on('click',startGame);
+	$start.on('click',startGame);//start the game when start button is clicked
 });
