@@ -44,7 +44,7 @@ $(document).ready(function() {
 		};
 
 		var removeGoat = function(select,place){//this is the part where it flashes off
-			setTimeout(function(){
+			window.setTimeout(function(){
 				select.removeClass(place);
 			}, 500);
 		};
@@ -52,26 +52,27 @@ $(document).ready(function() {
 		removeGoat(select,place);
 	};
 
-	var removeComputerGoat = function(goat, i) {//this removes the computer goat flash for computer
-		window.setTimeout(function(){
-			goat.removeClass('activate');
-		}, (i+1)*500);
-	};
+  var removeComputerGoat = function(goat) {//this removes the computer goat flash for computer
+    window.setTimeout(function(){
+      console.log("removeComputerGoat");
+      goat.removeClass('activate');
+    }, 600);
+  };
 
-	var addComputerGoat= function(goat, i) {//this adds computer goat flash for computer
-		window.setTimeout(function(){
-			goat.addClass('activate');
-			removeComputerGoat(goat,i);
-		}, (i+1)*500);
-	};
+  var addComputerGoat= function(goat, i) {//this adds computer goat flash for computer
+      console.log("addComputerGoat")
+      window.setTimeout(function(){
+        goat.addClass('activate');
+        removeComputerGoat(goat)}, i*700);
+  };
 
-	var compGoatSelector = function(){//this function adds and removes goat flash for computer
-		for (var i = 0; i < $goatPen.length; i++){
-			var goat = $goatPen[i];
-			addComputerGoat(goat,i);
-		}
-	};
 
+  var compGoatSelector = function(){//this function adds and removes goat flash for computer
+    for (var i = 0; i < $goatPen.length; i++){
+      var goat = $goatPen[i];
+      addComputerGoat(goat, i);
+    }
+  };
 
 	var addGoatToPen = function(){//this is how to add a random goat to the list of goats to click
 		var goatNumber = Math.floor(Math.random()*4);
@@ -144,8 +145,8 @@ $(document).ready(function() {
 			} else if ($goatPen[counter].selector === $humanPen[counter].selector){//if input is correct, partial reset for next round, score goes up
 				console.log('great job');
 				addGoatToPen();
-				setTimeout(function(){compGoatSelector();},500);
-				$humanPen= [];
+				setTimeout(compGoatSelector,2000);//made this change test later was anon function calling this beforehand
+				$humanPen = [];
 				score++;
 				$currScore.text(score);
 			}
@@ -157,6 +158,7 @@ $(document).ready(function() {
 		addGoatToPen();//starts by adding a goat to the pen
 		
 		setTimeout(function(){
+			console.log("startGame")
 			compGoatSelector();
 		}, 500);//callin the computer to start with a slight delay
 
