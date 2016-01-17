@@ -9,22 +9,28 @@
 <body>
 	<header>
 		<h1 class="title">Goat Clicker</h1>
-		<h1 class="highScoreTitle">High Score</h1>
-		<div class="scoreContainer">
-			<h2 id="highScoreName">Amadeo</h2>
-			<h2 id="highScore">3</h2>
+		<h2 class="high-score title">High Score</h2>
+		<div class="score-container">
+			<h2 id="high-score-name">Amadeo</h2>
+			<h2 id="high-score">3</h2>
 		</div>
 	</header>
-	<div class="goatContainer">
-		<div id="goatOne" class="goatButton"></div>
-		<div id="goatTwo" class="goatButton"></div>
-		<div id="goatThree" class="goatButton"></div>
-		<div id="goatFour" class="goatButton"></div>
+	<div class="modal-container">
+		<div class="modal">
+			<p>The goats keep escaping the pen! Remember the order they escape and click them to bring them back!</p>
+		</div>		
 	</div>
-	<div class="scoreCounter">
+
+	<div class="goat-container">
+		<div id="goat-one" class="goat-button"></div>
+		<div id="goat-two" class="goat-button"></div>
+		<div id="goat-three" class="goat-button"></div>
+		<div id="goat-four" class="goat-button"></div>
+	</div>
+	<div class="score-counter">
 		<button id="start">Start</button>
 		<h2>Score </h2>
-		<input id="playerName" placeholder="Input your name here before starting play" style="width: 250px">
+		<input id="player-name" placeholder="Name Here">
 		<h2 id="counter">0</h2>
 	</div>
 </body>
